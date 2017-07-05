@@ -1,37 +1,37 @@
 # WebComponent Overview
 
 <!-- vscode-markdown-toc -->
-* 1. [Custom Elements](#CustomElements)
-	* 1.1. [Constructor](#Constructor)
-	* 1.2. [connectedCallback](#connectedCallback)
-	* 1.3. [disconnectedCallback](#disconnectedCallback)
-	* 1.4. [adoptedCallback](#adoptedCallback)
-	* 1.5. [attributeChangedCallback](#attributeChangedCallback)
-	* 1.6. [observedAttributes](#observedAttributes)
-	* 1.7. [:defined pseudo-class](#definedpseudo-class)
-* 2. [Custom built-in elements (currently unsupported)](#Custombuilt-inelementscurrentlyunsupported)
-* 3. [Shadow DOM](#ShadowDOM)
-	* 3.1. [Slotting](#Slotting)
-	* 3.2. [Styling](#Styling)
-		* 3.2.1. [From Light to Shadow](#FromLighttoShadow)
-		* 3.2.2. [From  Shadow to Light](#FromShadowtoLight)
-* 4. [HTML Import](#HTMLImport)
-	* 4.1. [Example](#Example)
-	* 4.2. [Problems with HTML imports](#ProblemswithHTMLimports)
-* 5. [HTML Template](#HTMLTemplate)
-* 6. [Polyfills](#Polyfills)
-* 7. [Browser support](#Browsersupport)
-* 8. [Resources](#Resources)
+* [Custom Elements](#CustomElements)
+	* [Constructor](#Constructor)
+	* [connectedCallback](#connectedCallback)
+	* [disconnectedCallback](#disconnectedCallback)
+	* [adoptedCallback](#adoptedCallback)
+	* [attributeChangedCallback](#attributeChangedCallback)
+	* [observedAttributes](#observedAttributes)
+	* [:defined pseudo-class](#definedpseudo-class)
+* [Custom built-in elements (currently unsupported)](#Custombuilt-inelementscurrentlyunsupported)
+* [Shadow DOM](#ShadowDOM)
+	* [Slotting](#Slotting)
+	* [Styling](#Styling)
+		* [From Light to Shadow](#FromLighttoShadow)
+		* [From  Shadow to Light](#FromShadowtoLight)
+* [HTML Import](#HTMLImport)
+	* [Example](#Example)
+	* [Problems with HTML imports](#ProblemswithHTMLimports)
+* [HTML Template](#HTMLTemplate)
+* [Polyfills](#Polyfills)
+* [Browser support](#Browsersupport)
+* [Resources](#Resources)
 
 <!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
+	numbering=false
+	autoSave=false
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
 
 
-##  1. <a name='CustomElements'></a>Custom Elements
+## <a name='CustomElements'></a>Custom Elements
 * A custom element, a.k.a an *autonomous custom element* , should be defined with an ES6 class extending `HTMLElement`.
 * The name of a custom element *must* contain a dash (-) character, this is to prevent clashes with future built-in elements.
 * A custom element must be registered with the `CustomElementRegistry`.
@@ -58,24 +58,24 @@
 	<x-element></x-element>
 	```
 
-###  1.1. <a name='Constructor'></a>Constructor
+### <a name='Constructor'></a>Constructor
 * The constructor is run when the element is 'upgraded', i.e. it is both registered with the `CustomElementRegistry` and added to the DOM.
 * A parameter-less call to `super()` must be the first statement.
 * The constructor should be used only for setting up initial state and default values, event listeners and possibly a shadow root.
 * Work should be deferred to the `connectedCallback` as much as possible. 
 
-###  1.2. <a name='connectedCallback'></a>connectedCallback
+### <a name='connectedCallback'></a>connectedCallback
 Called when the element is registered and inserted in the DOM. This is the appropriate place to do actual (time-consuming) work like fetching resources or rendering. 
 
 Note that this callback can be called more than once.
 
-###  1.3. <a name='disconnectedCallback'></a>disconnectedCallback
+### <a name='disconnectedCallback'></a>disconnectedCallback
 Called when the element is detached from the DOM. Intended for cleanup purposes.
 
-###  1.4. <a name='adoptedCallback'></a>adoptedCallback
+### <a name='adoptedCallback'></a>adoptedCallback
 Called when the element is adopted into a new document through the `document.adoptNode` method.
 
-###  1.5. <a name='attributeChangedCallback'></a>attributeChangedCallback
+### <a name='attributeChangedCallback'></a>attributeChangedCallback
 Called whenever any of the attributes from the `observedAttributes` changes. 
 
 ```javascript
@@ -91,7 +91,7 @@ class FlagIcon extends HTMLElement {
 }
 ```
 
-###  1.6. <a name='observedAttributes'></a>observedAttributes
+### <a name='observedAttributes'></a>observedAttributes
 An array, defined on the class, of the attribute names for which the `attributeChangedCallback` should be called when they change.
 
 ```javascript
@@ -102,14 +102,14 @@ class FlagIcon extends HTMLElement {
 }
 ```
 
-###  1.7. <a name='definedpseudo-class'></a>:defined pseudo-class
+### <a name='definedpseudo-class'></a>:defined pseudo-class
 The :defined pseudo-class is applicable to each element that is known to the user agent, i.e. either it is a built-in element or the constructor of the custom element was successfully run.
 
 This for example allows for hiding the non-functional custom elements in CSS if the element definitions for the non-essential elements are being downloaded asynchronously to improve the initial load.
 
 Note that the :defined pseudo class can't be polyfilled, so it will only work for user agents that implement the custom element v1 specifications natively.
 
-##  2. <a name='Custombuilt-inelementscurrentlyunsupported'></a>Custom built-in elements (currently unsupported)
+## <a name='Custombuilt-inelementscurrentlyunsupported'></a>Custom built-in elements (currently unsupported)
 * An element extending a built in element is also known as a *customized built-in element*.
 * It is intended to work exactly like an autonomous custom element, however inheriting all behavior that the element that is extended would have.
 * In stead of extending `HTMLElement`, to create a customized built-in element it must extend a specific subclass like `HTMLButtonElement`, and supply an object specifying what element it extends as multiple elements use the same interface classes.
@@ -126,7 +126,7 @@ Note that the :defined pseudo class can't be polyfilled, so it will only work fo
 	<button is="x-button">Click me</x-button>	
 ```
 
-##  3. <a name='ShadowDOM'></a>Shadow DOM
+## <a name='ShadowDOM'></a>Shadow DOM
 * The shadow DOM defines a scope within which styles are applicable, together with the custom element spec, this allows for webcomponents with self contained HTML, CSS, and JS.
 *  A component's DOM is self-contained (e.g. document.querySelector() won't return nodes in the component's shadow DOM), Thus, simple id's and classes are enough for identification because they won't clash with the containing document.
 * A shadow tree can be attached to all elements that do not already host their own shadow DOM (`<texarea>`, `input`),  or where it does not make sense (`<img>`).
@@ -142,7 +142,7 @@ shadowRoot.appendChild(caption)
 
 * A shadow tree can have a style element and even a stylesheet. These styles are local to the shadow DOM and will not bleed into the document.
 
-###  3.1. <a name='Slotting'></a>Slotting
+### <a name='Slotting'></a>Slotting
 * The markup within an element is called 'Light DOM'.
 * By default, when a shadow tree is attached to an element, it's 'Light DOM' is ignored.
 * If the shadow tree defines slots, the 'Light DOM' is distributed into those slots, to create a 'Flattened DOM tree'.
@@ -195,18 +195,18 @@ shadowRoot.appendChild(caption)
 	</div>
 ```
 
-###  3.2. <a name='Styling'></a>Styling
+### <a name='Styling'></a>Styling
 * CSS selectors from the outer page don't apply inside the component, and vice versa. This allows for the use of simpler class names and id's as they won't conflict, which also has a positive effect on performance.
 * Styles can be defined within the shadow DOM for the elements from the light DOM, however the styles from the surrounding document take precedence.
 
-####  3.2.1. <a name='FromLighttoShadow'></a>From Light to Shadow
+#### <a name='FromLighttoShadow'></a>From Light to Shadow
 * The shadow DOM can exert limited influence on the host element (the element to which the shadow tree is attached) and the light DOM that is distributed into it's slots. However, in all cases, styling applied in the surrounding document will take precedence.
 * The `:host` selector selects the host element
 * The `:host(<selector>)` selector selects the host element only if the given `<selector>` matches the host.
 * The `:host-context(<compound-selector>)` selects the host element only if the given `<compound-selector>` matches the host or any of it's ancestors. This, for example, allows for theming across the page by toggling a class on the body element. (Although Custom CSS properties may be preferable here)
 * The `::slotted(<compound-selector>)` pseudo selector selects any _top level_ element from the light DOM that matches the `<compound-selector>` and is distributed into any of the shadow DOM's slots. 
 
-####  3.2.2. <a name='FromShadowtoLight'></a>From  Shadow to Light
+#### <a name='FromShadowtoLight'></a>From  Shadow to Light
 * The surrounding document can not influence the styling of the shadow DOM, unless the shadow DOM supplies styling hooks through CSS custom properties.
 * CSS custom properties are required to have two dashes before the name (--*), and can have any value;
 * They can then be picked up using `var(--foo)`, or `var(--foo, <fallback-value>)`
@@ -231,7 +231,7 @@ shadowRoot.appendChild(caption)
 	<h1>Hello World</h1>
 ```
 
-##  4. <a name='HTMLImport'></a>HTML Import
+## <a name='HTMLImport'></a>HTML Import
 * HTML imports allow fragments of HTML to be moved into another document. It does not need to be a full HTML page (with a `<head>`, `<body>`, etc) but may contain anything and all that is allowed within HTML, like markup content, script, styling and of course HTML imports of their own.
 * The mimetype of the import will be `text/html`
 * You can define an HTML import declaring a `<link rel="import">`
@@ -281,7 +281,7 @@ shadowRoot.appendChild(caption)
 * Script in the import is executed from the context of the window that contains the importing document, thus functions defined in the import are added to `window` for everyone to use and `document` refers to the main document.
 * The 'document' of the import itself can be retrieved through `document.currentScript.ownerDocument`. However, `currentScript` is only available when the script is initially being processed. So if you need the `ownerDocument` for code executing within a callback or event handler you'll have to capture it for later use.
 
-###  4.1. <a name='Example'></a>Example
+### <a name='Example'></a>Example
 
 main.html
 ```html 
@@ -352,12 +352,12 @@ importsheet.css
 
 
 
-###  4.2. <a name='ProblemswithHTMLimports'></a>Problems with HTML imports
+### <a name='ProblemswithHTMLimports'></a>Problems with HTML imports
 * De-duplication allows for a form of dependency management, i.e. including jquery multiple times will only result in jquery being downloaded once. However, this only works when the url is the exact same [\[6\]][6].
 * Due to the upcoming ES6 modules implemtation across browsers which is expected to influence the direction the HTML import specification will take to adress the concerns with dependency management, Mozilla has decided **not** to implement the current draft specification[\[7\]][7][\[8\]][8][\[9\]][9]. However, due to the existence of a polyfill, this is not seen as an impediment for webcomponents.
 
 
-##  5. <a name='HTMLTemplate'></a>HTML Template
+## <a name='HTMLTemplate'></a>HTML Template
 * HTML template is the first of the WebComponent specs to be implemented by all browser vendors, only IE11 requires a polyfill.
 * A HTML template is indicated with the `<template>` tag, and can be placed virtually anywhere.
 * The content of the `<template>` tag is put into a different html document fragment by the parser and as such is completely inert. This means script won't run, markup won't render, and styles won't apply. It does not even have to be valid HTML.
@@ -388,7 +388,7 @@ importsheet.css
 	</script>
 ```
 
-##  6. <a name='Polyfills'></a>Polyfills
+## <a name='Polyfills'></a>Polyfills
 * All modern browsers have at least indicated to be working towards implementing the 4 specifications that comprise webcomponents, in the mean time there are polyfills available to patch the gaps at [https://github.com/WebComponents/webcomponentsjs][4]. 
 * The polyfills are applied asynchronously, so to be sure everything is ready you should move any logic that requires the polyfills to be in place into the custom WebComponentsReady event. If you are working with lower level polyfills you may have to wait for the DOMContentLoaded event.
 
@@ -405,7 +405,7 @@ importsheet.css
 *  The specification of Custom Elements requires ES6 support, but not all browsers support this (IE11). WebComponents can be transpiled to ES5 and provide the same functionality to those browsers, however if, for simplicity, the transpiled sources are used for all browsers it is necessary to include `/webcomponentsjs/custom-elements-es5-adapter.js`. This is a shim for browsers that support Custom Elements natively to make sure things won't break for them. 
 * Note that the polyfills and the shim don't need to be, and should not be transpiled.
 
-##  7. <a name='Browsersupport'></a>Browser support
+## <a name='Browsersupport'></a>Browser support
 
 * :white_check_mark:: natively supported
 * :large_orange_diamond:: supported with polyfill
@@ -468,7 +468,7 @@ importsheet.css
 	</tr>
 </table>
 
-##  8. <a name='Resources'></a>Resources
+## <a name='Resources'></a>Resources
 1. [Custom Element Specification][1]
 1. [Shadow DOM v1: Self-Contained Web Components][2]
 1. [Open vs Closed Shadow DOM][3]
