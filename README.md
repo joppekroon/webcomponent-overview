@@ -123,7 +123,7 @@ Note that the :defined pseudo class can't be polyfilled, so it will only work fo
 ```
 * In stead of a specific tag, the base element tag is used and enhanced with the `is` property set to the name of the customized built-in element.
 ```html
-	<button is="x-button">Click me</x-button>	
+	<button is="x-button">Click me</button>	
 ```
 
 ## <a name='ShadowDOM'></a>Shadow DOM
