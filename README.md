@@ -410,7 +410,6 @@ importsheet.css
 * :white_check_mark:: natively supported
 * :large_orange_diamond:: supported with polyfill
 * :x:: not supported
-* :question: unknown
 
 <table>
 	<tr>
@@ -462,7 +461,7 @@ importsheet.css
 		<td>:large_orange_diamond:</td>
 		<td>:large_orange_diamond:</td>
 		<td>:white_check_mark:</td>
-		<td>:question:</td>
+		<td>:large_orange_diamond:</td>
 		<td>:white_check_mark:</td>
 		<td>:white_check_mark:</td>
 	</tr>
@@ -503,6 +502,7 @@ importsheet.css
 1. [Re: HTML imports in Firefox (Anne van Kesteren)][8]
 1. [Re: HTML imports in Firefox (Boris Zbarsky)][9] 
 1. [Polymer: Billions Served; Lessons Learned (Google I/O '17)][10]
+1. [Browser support overview][11]
 
 [1]: https://w3c.github.io/webcomponents/spec/custom/#custom-element-conformance "Custom Element Specification"
 [2]: https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom "Shadow DOM v1: Self-Contained Web Components"
@@ -514,3 +514,4 @@ importsheet.css
 [8]: http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0616.html "Re: HTML imports in Firefox (Anne van Kesteren)"
 [9]: http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0614.html "Re: HTML imports in Firefox (Boris Zbarsky)"
 [10]: https://youtu.be/assSM3rlvZ8 "Polymer: Billions Served; Lessons Learned (Google I/O '17)"
+[11]: https://www.polymer-project.org/2.0/docs/browsers "Browser support overview"
