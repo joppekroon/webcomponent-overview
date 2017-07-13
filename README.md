@@ -415,7 +415,7 @@ importsheet.css
 <table>
 	<tr>
 		<td></td>
-		<td colspan="5">Desktop</td>
+		<td colspan="6">Desktop</td>
 		<td colspan="3">Mobile</td>
 	<tr>
 	<tr>
