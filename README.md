@@ -410,8 +410,14 @@ importsheet.css
 * :white_check_mark:: natively supported
 * :large_orange_diamond:: supported with polyfill
 * :x:: not supported
+* :question: unknown
 
 <table>
+	<tr>
+		<td></td>
+		<td colspan="5">Desktop</td>
+		<td colspan="3">Mobile</td>
+	<tr>
 	<tr>
 		<td></td>
 		<td>Chrome</td>
@@ -420,6 +426,9 @@ importsheet.css
 		<td>IE11</td>
 		<td>Safari</td>
 		<td>Opera</td>
+		<td>IOS Safari</td>
+		<td>Android Browser</td>
+		<td>Chrome for Android</td>
 	</tr>
 	<tr>
 		<td>Custom Elements (v1)</td>
@@ -427,6 +436,9 @@ importsheet.css
 		<td>:large_orange_diamond:</td>
 		<td>:large_orange_diamond:</td>
 		<td>:large_orange_diamond:</td>
+		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
 		<td>:white_check_mark:</td>
 		<td>:white_check_mark:</td>
 	</tr>
@@ -438,6 +450,9 @@ importsheet.css
 		<td>:large_orange_diamond:</td>
 		<td>:white_check_mark:</td>
 		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
 	</tr>
 	<tr>
 		<td>HTML Import</td>
@@ -446,6 +461,9 @@ importsheet.css
 		<td>:large_orange_diamond:</td>
 		<td>:large_orange_diamond:</td>
 		<td>:large_orange_diamond:</td>
+		<td>:white_check_mark:</td>
+		<td>:question:</td>
+		<td>:white_check_mark:</td>
 		<td>:white_check_mark:</td>
 	</tr>
 	<tr>
@@ -456,6 +474,9 @@ importsheet.css
 		<td>:large_orange_diamond:</td>
 		<td>:white_check_mark:</td>
 		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
 	</tr>
 	<tr>
 		<td>CSS custom properties</td>
@@ -463,6 +484,9 @@ importsheet.css
 		<td>:white_check_mark:</td>
 		<td>:white_check_mark:</td>
 		<td>:x:</td>
+		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
+		<td>:white_check_mark:</td>
 		<td>:white_check_mark:</td>
 		<td>:white_check_mark:</td>
 	</tr>
