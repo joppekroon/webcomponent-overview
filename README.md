@@ -280,7 +280,7 @@ shadowRoot.appendChild(caption)
 
 * Script in the import is executed from the context of the window that contains the importing document, thus functions defined in the import are added to `window` for everyone to use and `document` refers to the main document.
 * The 'document' of the import itself can be retrieved through `document.currentScript.ownerDocument`. However, `currentScript` is only available when the script is initially being processed. So if you need the `ownerDocument` for code executing within a callback or event handler you'll have to capture it for later use.
-* The [HTML import polyfill][4] exposes the 'document' through `document._currentScript.ownerDocument` (note the underscore). 
+* The [HTML import polyfill][polyfill_repo] exposes the 'document' through `document._currentScript.ownerDocument` (note the underscore). 
 It will add a `HTMLImports.useNative` property to be able to detect which one should be used.  
 
 ### <a name='Example'></a>Example
@@ -355,8 +355,8 @@ importsheet.css
 
 
 ### <a name='ProblemswithHTMLimports'></a>Problems with HTML imports
-* De-duplication allows for a form of dependency management, i.e. including jquery multiple times will only result in jquery being downloaded once. However, this only works when the url is the exact same [\[6\]][6].
-* Due to the upcoming ES6 modules implemtation across browsers which is expected to influence the direction the HTML import specification will take to adress the concerns with dependency management, Mozilla has decided **not** to implement the current draft specification[\[7\]][7][\[8\]][8][\[9\]][9]. However, due to the existence of a polyfill, this is not seen as an impediment for webcomponents.
+* De-duplication allows for a form of dependency management, i.e. including jquery multiple times will only result in jquery being downloaded once. However, this [only works when the url is the exact same][html_imports_dep_man].
+* Due to the upcoming ES6 modules implemtation across browsers which is expected to influence the direction the HTML import specification will take to adress the concerns with dependency management, [Mozilla has decided **not** to implement the current draft specification][html_imports_mozilla]. Their reasons are explained in an email discussion [by Anne van Kesteren][html_imports_AvK] [and Boris Zbarsky][html_imports_BZ]. However, due to the existence of a polyfill, this is not seen as an impediment for webcomponents.
 
 
 ## <a name='HTMLTemplate'></a>HTML Template
@@ -391,7 +391,7 @@ importsheet.css
 ```
 
 ## <a name='Polyfills'></a>Polyfills
-* All modern browsers have at least indicated to be working towards implementing the 4 specifications that comprise webcomponents, in the mean time there are polyfills available to patch the gaps at [https://github.com/WebComponents/webcomponentsjs][4]. 
+* All modern browsers have at least indicated to be working towards implementing the 4 specifications that comprise webcomponents, in the mean time there are polyfills available to patch the gaps at [https://github.com/WebComponents/webcomponentsjs][polyfill_repo]. 
 * The polyfills are applied asynchronously, so to be sure everything is ready you should move any logic that requires the polyfills to be in place into the custom WebComponentsReady event. If you are working with lower level polyfills you may have to wait for the DOMContentLoaded event.
 
 ```javasript
@@ -494,26 +494,48 @@ importsheet.css
 </table>
 
 ## <a name='Resources'></a>Resources
-1. [Custom Element Specification][1]
-1. [Shadow DOM v1: Self-Contained Web Components][2]
-1. [Open vs Closed Shadow DOM][3]
-1. [WebComponents polyfill repository][4]
-1. [HTML Imports #include for the web][5]
-1. [The Problem With Using HTML Imports For Dependency Management][6] 
-1. [Mozilla and Web Components: Update][7]
-1. [Re: HTML imports in Firefox (Anne van Kesteren)][8]
-1. [Re: HTML imports in Firefox (Boris Zbarsky)][9] 
-1. [Polymer: Billions Served; Lessons Learned (Google I/O '17)][10]
-1. [Browser support overview][11]
+1. [Custom Element Specification][custom_element_specification]
+1. [Shadow DOM v1: Self-Contained Web Components][shadow_dom]
+1. [Open vs Closed Shadow DOM][open_vs_closed]
+1. [WebComponents polyfill repository][polyfill_repo]
+1. [HTML Imports #include for the web][html_imports]
+1. [The Problem With Using HTML Imports For Dependency Management][html_imports_dep_man] 
+1. [Mozilla and Web Components: Update][html_imports_mozilla]
+1. [Re: HTML imports in Firefox (Anne van Kesteren)][html_imports_AvK]
+1. [Re: HTML imports in Firefox (Boris Zbarsky)][html_imports_BZ] 
+1. [Polymer: Billions Served; Lessons Learned (Google I/O '17)][polymer_lessons_learned]
+1. [Browser support overview][browser_support]
 
-[1]: https://w3c.github.io/webcomponents/spec/custom/#custom-element-conformance "Custom Element Specification"
-[2]: https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom "Shadow DOM v1: Self-Contained Web Components"
-[3]: https://blog.revillweb.com/open-vs-closed-shadow-dom-9f3d7427d1af "Open vs Closed Shadow DOM"
-[4]: https://github.com/webcomponents/webcomponentsjs "WebComponents polyfill repository"
-[5]: https://www.html5rocks.com/en/tutorials/webcomponents/imports/ "HTML Imports #include for the web"
-[6]: https://www.tjvantoll.com/2014/08/12/the-problem-with-using-html-imports-for-dependency-management/ "The Problem With Using HTML Imports For Dependency Management"
-[7]: https://hacks.mozilla.org/2014/12/mozilla-and-web-components/ "Mozilla and Web Components: Update"
-[8]: http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0616.html "Re: HTML imports in Firefox (Anne van Kesteren)"
-[9]: http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0614.html "Re: HTML imports in Firefox (Boris Zbarsky)"
-[10]: https://youtu.be/assSM3rlvZ8 "Polymer: Billions Served; Lessons Learned (Google I/O '17)"
-[11]: https://www.polymer-project.org/2.0/docs/browsers "Browser support overview"
+[custom_element_specification]:
+	https://w3c.github.io/webcomponents/spec/custom/#custom-element-conformance
+	"Custom Element Specification"
+[shadow_dom]:
+	https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom
+	"Shadow DOM v1: Self-Contained Web Components"
+[open_vs_closed]:
+	https://blog.revillweb.com/open-vs-closed-shadow-dom-9f3d7427d1af
+	"Open vs Closed Shadow DOM"
+[polyfill_repo]:
+	https://github.com/webcomponents/webcomponentsjs
+	"WebComponents polyfill repository"
+[html_imports]:
+	https://www.html5rocks.com/en/tutorials/webcomponents/imports/
+	"HTML Imports #include for the web"
+[html_imports_dep_man]:
+	https://www.tjvantoll.com/2014/08/12/the-problem-with-using-html-imports-for-dependency-management/
+	"The Problem With Using HTML Imports For Dependency Management"
+[html_imports_mozilla]:
+	https://hacks.mozilla.org/2014/12/mozilla-and-web-components/
+	"Mozilla and Web Components: Update"
+[html_imports_AvK]:
+	http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0616.html
+	"Re: HTML imports in Firefox (Anne van Kesteren)"
+[html_imports_BZ]:
+	http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0614.html
+	"Re: HTML imports in Firefox (Boris Zbarsky)"
+[polymer_lessons_learned]:
+	https://youtu.be/assSM3rlvZ8
+	"Polymer: Billions Served; Lessons Learned (Google I/O '17)"
+[browser_support]:
+	https://www.polymer-project.org/2.0/docs/browsers
+	"Browser support overview"
