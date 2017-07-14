@@ -356,7 +356,7 @@ importsheet.css
 
 ### <a name='ProblemswithHTMLimports'></a>Problems with HTML imports
 * De-duplication allows for a form of dependency management, i.e. including jquery multiple times will only result in jquery being downloaded once. However, this [only works when the url is the exact same][html_imports_dep_man].
-* Due to the upcoming ES6 modules implemtation across browsers which is expected to influence the direction the HTML import specification will take to adress the concerns with dependency management, [Mozilla has decided **not** to implement the current draft specification][html_imports_mozilla]. Their reasons are explained in an email discussion [by Anne van Kesteren][html_imports_AvK] [and Boris Zbarsky][html_imports_BZ]. However, due to the existence of a polyfill, this is not seen as an impediment for webcomponents.
+* Due to the upcoming ES6 modules implementation across browsers which is expected to influence the direction the HTML import specification will take to adress the concerns with dependency management, [Mozilla has decided **not** to implement the current draft specification][html_imports_mozilla]. Their reasons are explained in an email discussion [by Anne van Kesteren][html_imports_AvK] [and Boris Zbarsky][html_imports_BZ]. However, due to the existence of a polyfill, this is not seen as an impediment for webcomponents.
 
 
 ## <a name='HTMLTemplate'></a>HTML Template
