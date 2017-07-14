@@ -280,6 +280,8 @@ shadowRoot.appendChild(caption)
 
 * Script in the import is executed from the context of the window that contains the importing document, thus functions defined in the import are added to `window` for everyone to use and `document` refers to the main document.
 * The 'document' of the import itself can be retrieved through `document.currentScript.ownerDocument`. However, `currentScript` is only available when the script is initially being processed. So if you need the `ownerDocument` for code executing within a callback or event handler you'll have to capture it for later use.
+* The [HTML import polyfill][4] exposes the 'document' through `document._currentScript.ownerDocument` (note the underscore). 
+It will add a `HTMLImports.useNative` property to be able to detect which one should be used.  
 
 ### <a name='Example'></a>Example
 
