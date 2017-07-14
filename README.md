@@ -357,6 +357,11 @@ importsheet.css
 ### <a name='ProblemswithHTMLimports'></a>Problems with HTML imports
 * De-duplication allows for a form of dependency management, i.e. including jquery multiple times will only result in jquery being downloaded once. However, this [only works when the url is the exact same][html_imports_dep_man].
 * Due to the upcoming ES6 modules implementation across browsers which is expected to influence the direction the HTML import specification will take to adress the concerns with dependency management, [Mozilla has decided **not** to implement the current draft specification][html_imports_mozilla]. Their reasons are explained in an email discussion [by Anne van Kesteren][html_imports_AvK] [and Boris Zbarsky][html_imports_BZ]. However, due to the existence of a polyfill, this is not seen as an impediment for webcomponents.
+* When writing your own component, you may want to include resources that are served from your component's location.
+  However, in the current specification, references (such as `src`, `href`, and, in CSS, `url`) are resolved relatively to the main document (where your component is imported), and not to your component's location.
+  
+  It is possible to work around this without having to resort to absolute paths, but this requires rewriting all references with [bindings][polymer_import_path] or custom logic.
+  This works by using `document.currentScript.ownerDocument.baseUri` to find the location of the current component, as opposed to the location of the main document where the component is imported.
 
 
 ## <a name='HTMLTemplate'></a>HTML Template
@@ -505,6 +510,7 @@ importsheet.css
 1. [Re: HTML imports in Firefox (Boris Zbarsky)][html_imports_BZ] 
 1. [Polymer: Billions Served; Lessons Learned (Google I/O '17)][polymer_lessons_learned]
 1. [Browser support overview][browser_support]
+1. [URLs in templates][polymer_import_path]
 
 [custom_element_specification]:
 	https://w3c.github.io/webcomponents/spec/custom/#custom-element-conformance
@@ -539,3 +545,6 @@ importsheet.css
 [browser_support]:
 	https://www.polymer-project.org/2.0/docs/browsers
 	"Browser support overview"
+[polymer_import_path]:
+	https://www.polymer-project.org/2.0/docs/devguide/dom-template#urls-in-templates
+	"URLs in templates"
