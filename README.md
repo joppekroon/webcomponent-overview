@@ -107,7 +107,37 @@ The :defined pseudo-class is applicable to each element that is known to the use
 
 This for example allows for hiding the non-functional custom elements in CSS if the element definitions for the non-essential elements are being downloaded asynchronously to improve the initial load.
 
-Note that the :defined pseudo class can't be polyfilled, so it will only work for user agents that implement the custom element v1 specifications natively.
+```css
+my-element:not(:defined) {
+	display: block;
+	height: 100vh;
+	opacity: 0;
+}
+```
+
+The :defined pseudo class unfortunately can not be polyfilled, so it will only work for user agents that implement the custom element v1 specifications natively. However, you can mimic this behaviour with for example an attribute that is removed once the element is connected.
+
+```css
+my-element[unresolved] {
+	display: block;
+	height: 100vh;
+	opacity: 0;
+}
+```
+
+```javascript
+class MyElement extends HTMLElement {
+	...
+	connectedCallback() { 
+		this.removeAttribute('unresolved');
+	}
+	...
+}
+```
+
+```html
+<my-element unresolved></my-element>
+```
 
 ## <a name='Custombuilt-inelementscurrentlyunsupported'></a>Custom built-in elements (currently unsupported)
 * An element extending a built in element is also known as a *customized built-in element*.
