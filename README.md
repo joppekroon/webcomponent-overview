@@ -59,7 +59,7 @@ window.customElements.define("my-custom-element", MyCustomElement);
 <my-custom-element></my-custom-element>
 ```
 
-### <a name='Constructor'></a>Constructor
+### <a name='Constructor'></a>`constructor`
 * The constructor is run when the element is 'upgraded', i.e. it is both registered with the `CustomElementRegistry` and added to the DOM.
 * A no-args call to `super()` must be the first statement.
 * The constructor should be used only for setting up initial state and default values, event listeners and possibly a shadow root.
@@ -145,7 +145,7 @@ class MyCustomElement extends HTMLElement {
 ## <a name='Custombuilt-inelementscurrentlyunsupported'></a>Custom built-in elements (currently unsupported)
 * An element extending a built-in element is known as a *customized built-in element*.
 * It is intended to work exactly like an autonomous custom element, but inheriting all behavior from its parent built-in element.
-* Rather than extending `HTMLElement`, a customized built-in element it should extend one of its subclasses (like `HTMLButtonElement`), and supply a configuration object to specify what element is extended (since multiple elements can use the same interface class).
+* Rather than extending `HTMLElement` itself, a customized built-in element extends one of the corresponding subclasses (like `HTMLButtonElement`), and it supplies a configuration object to specify what element is extended (since multiple elements can use the same interface class).
 
 ```javascript
 class MyCustomButton extends HTMLButtonElement {
@@ -163,11 +163,11 @@ window.customElements.define("my-custom-button", MyCustomButton, { extends: "but
 ```
 
 ## <a name='ShadowDOM'></a>Shadow DOM
-* The shadow DOM defines a scope within which styles are applicable.
+* The Shadow DOM defines a scope within which styles are applicable.
   Together with the custom element spec, this allows for webcomponents with self contained HTML, CSS, and JS.
-* A component's DOM is self-contained (e.g. `document.querySelector()` will not return nodes in the component's shadow DOM).
+* A component's DOM is self-contained (e.g. `document.querySelector()` will not return nodes in the component's Shadow DOM).
   Thus, simple `id`s and class names are enough for identification, because they will not clash with the containing document.
-* A shadow tree can be attached to all elements, except to those that already host their own shadow DOM (`<texarea>`, `input`), or to those for which it does not make sense (`<img>`).
+* Shadow DOM can be attached to all elements, except to those that already host their own Shadow DOM (`<texarea>`, `input`), or to those for which it does not make sense (`<img>`).
 
 ```javascript
 const header = document.createElement('header');
@@ -178,19 +178,16 @@ caption.appendChild(document.createTextNode('Hello Shadow DOM'));
 shadowRoot.appendChild(caption);
 ```
 
-[//]: # (FIXME: What do you mean with a stylesheet, as opposed to a style element, here?)
-* A shadow tree can have a style element and even a stylesheet.
-  These styles are local to the shadow DOM and will not bleed into the document.
+* A Shadow DOM tree can contain `<style>` and even `<link rel="stylesheet">`.
+  These styles are local to the Shadow DOM and will not bleed into the document.
 
 ### <a name='Slotting'></a>Slotting
-[//]: # (FIXME: Isn't basically everything in the regular HTML part of the Light DOM?)
-[//]: # (FIXME: You are using "shadow tree" versus "Light DOM", y u no consistent?)
-[//]: # (FIXME: The bits about "default content" aren't very clear...)
-* The markup within an element is called 'Light DOM'.
-* By default, when a shadow tree is attached to an element, its Light DOM is ignored.
-* If the shadow tree has slots, all elements in the Light DOM are distributed over those slots, to create a 'Flattened DOM tree'.
+* The markup within a custom element is called 'Light DOM'.
+* By default, when a Shadow DOM tree is attached to an element, its Light DOM is ignored.
+* If the Shadow DOM has slots, all elements in the Light DOM are distributed over those slots, to create a 'Flattened DOM tree'.
 * Slots can have a name and default content.
-  The name is used to identify a specific slot for Light DOM content. If there is no Light DOM for a slot, the default content is used.
+  The name is used to identify a specific slot for Light DOM content.
+  If there is no Light DOM to fit in a slot, its default content (any markup inside `<slot>`) is used.
 * The slot with no name is the default slot, and all elements in the Light DOM that do not specify a slot are moved there.
   Note: Technically you can have multiple unnamed slots, but only the first one will ever be populated.
 
@@ -205,7 +202,7 @@ shadowRoot.appendChild(caption);
 ```
  
 ```html
- <!-- Visual representation of the shadow DOM -->
+ <!-- Visual representation of the Shadow DOM -->
 <h1>
 	<slot>Header here</slot>
 </h1>
@@ -242,19 +239,19 @@ shadowRoot.appendChild(caption);
 ### <a name='Styling'></a>Styling
 * CSS selectors from the outer page do not apply inside the component, and vice versa.
   This allows for the use of simpler class names and `id`s as they will not conflict, which also has a positive effect on performance.
-* Styles can be defined within the shadow DOM for the elements from the light DOM, however the styles from the surrounding document take precedence.
+* Styles can be defined within the Shadow DOM for the elements from the Light DOM, however the styles from the surrounding document take precedence.
 
 #### <a name='FromLighttoShadow'></a>From Light to Shadow
-* The shadow DOM can exert limited influence on the host element (the element to which the shadow tree is attached) and the light DOM that is distributed into its slots.
+* The Shadow DOM can exert limited influence on the host element (the element to which the Shadow tree is attached) and the Light DOM that is distributed into its slots.
   However, in all cases, styling applied in the surrounding document will take precedence.
 * `:host` selects the host element.
 * `:host(<selector>)` selects the host element only if the given `<selector>` matches the host.
 * `:host-context(<compound-selector>)` selects the host element only if the given `<compound-selector>` matches the host or any of its ancestors.
   This allows, for example, for having themes across the page by toggling a class on the body element (although CSS custom properties may be preferable here).
-* `::slotted(<compound-selector>)` selects any _top level_ element from the light DOM that matches the `<compound-selector>` and is distributed into any of the shadow DOM's slots.
+* `::slotted(<compound-selector>)` selects any _top level_ element from the Light DOM that matches the `<compound-selector>` and is distributed into any of the Shadow DOM's slots.
 
-#### <a name='FromShadowtoLight'></a>From  Shadow to Light
-* The surrounding document can not influence the styling of the shadow DOM, unless the shadow DOM supplies styling hooks through CSS custom properties.
+#### <a name='FromShadowtoLight'></a>From Shadow to Light
+* The surrounding document can not influence the styling of the Shadow DOM, unless the Shadow DOM supplies styling hooks through CSS custom properties.
 * CSS custom properties are required to have two dashes before the name (`--*`), and can have any value.
 * They can be picked up using `var(--foo)`, or `var(--foo, <fallback-value>)`.
 
@@ -300,7 +297,7 @@ link.href = 'file.html';
 document.head.appendChild(link);
 ```
 
-* An HTML import will not just add its content to the document, it will make it available for later use, as well.
+* An HTML import will not add anything to the document, but it will make its contents available for later use, instead.
 
 ```javascript
 const content = document.querySelector('link[rel="import"]').import;
@@ -334,7 +331,7 @@ const content = document.querySelector('link[rel="import"]').import;
   However, `currentScript` is only available when the script is initially being processed.
   So if you need the `ownerDocument` for code executing within a callback or event handler you'll have to store it for later use.
 * The [HTML import polyfill][polyfill_repo] exposes the `document` through `document._currentScript.ownerDocument` (note the underscore). 
-  It will add a `HTMLImports.useNative` property to be able to detect which `ownerDocument` should be used.  
+  It will add an `HTMLImports.useNative` property to be able to detect which `ownerDocument` should be used.  
 
 ### <a name='Example'></a>Example
 
@@ -422,7 +419,7 @@ h1 {
 
 ## <a name='HTMLTemplate'></a>HTML Template
 * HTML template is the first of the WebComponent specs to be implemented by all browser vendors, only IE11 requires a polyfill.
-* A HTML template is indicated with the `<template>` tag, and can be placed virtually anywhere in the DOM.
+* An HTML template is indicated with the `<template>` tag, and can be placed virtually anywhere in the DOM.
 * The content of the `<template>` tag is put into a different HTML document fragment by the parser and as such is completely inert.
   This means script won't run, markup won't render, and styles won't apply.
   It does not even have to be valid HTML.
