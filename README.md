@@ -1,3 +1,5 @@
+:warning: This information has not been kept up to date with the current state of WebComponents.
+
 # WebComponent Overview
 
 <!-- vscode-markdown-toc -->
